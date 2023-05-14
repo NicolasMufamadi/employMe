@@ -14,14 +14,14 @@ module.exports = async (req,res) => {
             const isMatch = await bcrypt.compare(clearPassword,auth.rows[0].password);
             if(isMatch){
                 const token = jwt.sign(auth.rows[0],process.env.SECRET,{
-                    expiresIn: '02min'
+                    expiresIn: '30min'
                 })
                 res.status(200).send({data: auth.rows[0],token: token});
             }else{
-            res.status(404).send({err: "Password Incorrect"});
+            res.status(404).send({passwordErr: "Password Incorrect"});
         }
      }else{
-        res.status(404).send({err: "Email does not exist"});
+        res.status(404).send({emailErr: "Email does not exist"});
      }
     } catch (error) {
         res.status(404).send(error);
