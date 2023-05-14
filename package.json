@@ -25,6 +25,7 @@
     "jsonwebtoken": "^9.0.0",
     "nodemon": "^2.0.21",
     "pg": "^8.10.0",
-    "postgres": "^3.3.4"
+    "postgres": "^3.3.4",
+    "validator": "^13.9.0"
   }
 }
