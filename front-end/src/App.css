@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+  color: #388087;
+  font-size: large;
+  position: relative;
+}
+
+
+.navbar{
+  border-bottom: 2px #C2EDCE solid;
+}
+
+.btn{
+  color: #388087;
+  font-size: large;
+}
+
+.link{
+  text-decoration: none;
+  color: #388087;
+  margin-left: 15px;
+}
+
+.icon:hover{
+  cursor: pointer;
+}
+
+
+

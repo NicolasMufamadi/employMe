@@ -1,0 +1,13 @@
+.listItem{
+  list-style: none;
+    
+}
+
+.listItem:hover{
+   cursor: pointer;
+   background-color: #C2EDCE;
+   color: #fff;
+}
+
+
+

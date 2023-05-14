@@ -1,0 +1,14 @@
+
+.container{
+    height: 80vh;
+    position: relative;
+}
+.text{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: black;
+    width: 60%;
+}
