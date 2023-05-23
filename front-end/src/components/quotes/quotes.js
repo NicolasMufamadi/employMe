@@ -1,47 +1,59 @@
 import './quotes.css'
+
 import { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsDown, faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+
 import config from '../../config';
+
 
 export default function Quotes() {
 
-
-  
-   
+    
 
 
-    const list = [{ id: 1, type: "success" }, { id: 2, type: "learning" },
-    { id: 3, type: "inspirational" }, { id: 4, type: "happiness" },
-    { id: 5, type: "dreams" }, { id: 6, type: "faith" }, { id: 7, type: "change" },
-    { id: 8, type: "attitude" }, { id: 9, type: "courage" }, { id: 10, type: "failure" }]
-
+    const list = [{ id: 1, type: "Success" }, { id: 2, type: "Learning" },
+    { id: 3, type: "Inspirational" }, { id: 4, type: "Happiness" },
+    { id: 5, type: "Dreams" }, { id: 6, type: "Faith" }, { id: 7, type: "Change" },
+    { id: 8, type: "Attitude" }, { id: 9, type: "Courage" }, { id: 10, type: "Failure" }]
+    const [quote,setQuote] = useState({});
+    const [date,setDate] = useState(new Date().getDate());
 
     useEffect(()=>{
-          
-        async function fetchQuotes(){
+
         
-            try {
-                
-                const response = await fetch('https://api.api-ninjas.com/v1/quotes?category=happiness',{
+        const random = Math.floor(Math.random() * list.length)
+        //console.log(list[random].type)
+             fetch('https://api.api-ninjas.com/v1/quotes?category='+list[random].type,{
                     method: "GET",
-                    headers:{'X-Api_Key': config.key.apiKey}
+                    headers:{
+                               'X-Api-Key': config.key.apiKey,
+                               
+                            }
+                }).then(res => res.json())
+                .then(data => setQuote(data[0]))
+                .catch(err=>{
+                    console.log(err);
                 })
-                
-                console.log(await response)
 
-            } catch (error) {
-                
-            }
-        }
-        fetchQuotes();
+    },[date])
 
-    },[])
+    const  getQuote = (quoteType) => {
 
+        fetch('https://api.api-ninjas.com/v1/quotes?category='+quoteType,{
+            method: "GET",
+            headers: {'X-Api-Key': config.key.apiKey}
+        }).then(res => res.json())
+        .then(data => setQuote(data[0]))
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+    
 
     const ListItems = list.map((item) =>
         <div key={item.id} >
-            <li className="listItem">
+            <li className="listItem" onClick={()=>getQuote(item.type)}>
                 {item.type}
             </li>
         </div>
@@ -68,12 +80,12 @@ export default function Quotes() {
                 <div className='col-sm-8'>
                     <div className='card' style={{ marginTop: '5rem' }}>
                         <div className='card-header'>
-                            Quote
+                            {quote.category}
                         </div>
                         <div className='card-body'>
                             <blockquote className="blockquote mb-0">
-                                <p>A well-known quote, contained in a blockquote element.</p>
-                                <footer className="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                                <p>"{quote.quote}"</p>
+                                <footer className="blockquote-footer">{ quote.author }</footer>
                             </blockquote>
                         </div>
                         <div className='card-footer text-muted'>
