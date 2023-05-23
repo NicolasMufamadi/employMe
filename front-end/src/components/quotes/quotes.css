@@ -9,5 +9,7 @@
    color: #fff;
 }
 
-
-
+.card-header{
+  font-size: 1.8rem;
+  font-weight: bolder;
+}
