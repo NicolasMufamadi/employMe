@@ -61,12 +61,12 @@ export default function Quotes() {
 
     return (
         <div>
-            <h1>Stay motivated</h1>
+            <h1 className='text-center'>Stay motivated</h1>
             <div className="row">
                 <div className='col-sm-3'>
                     <div className='card'>
                         <div className="card border border-info" >
-                            <div className="card-header">
+                            <div className="card-header text-center">
                                 Quotes
                             </div>
                             <div className="list-group">
@@ -79,7 +79,7 @@ export default function Quotes() {
                 </div>
                 <div className='col-sm-8'>
                     <div className='card' style={{ marginTop: '5rem' }}>
-                        <div className='card-header'>
+                        <div className='card-header text-center'>
                             {quote.category}
                         </div>
                         <div className='card-body'>

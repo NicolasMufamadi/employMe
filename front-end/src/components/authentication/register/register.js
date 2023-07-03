@@ -82,11 +82,12 @@ export default function Register() {
     return(
         <div className="d-flex justify-content-center">
              <div className='loginForm'>
-                 <h1 className='header'>Register</h1>
+                 <h1 className='header text-center'>Register</h1>
              <form>
                 <div className='form-group'>
                     <label className='label'>Email</label>
                     <input 
+                            type='email'
                             className='input' 
                             placeholder='Enter email'
                             value={email}
@@ -102,6 +103,7 @@ export default function Register() {
                 <div className='form-group'>
                     <label className='label'>Password</label>
                     <input 
+                            type='password'
                             className='input' 
                             placeholder='Enter Pasword'
                             value={password}
@@ -117,6 +119,7 @@ export default function Register() {
                 <div className='form-group'>
                     <label className='label'>Confirm password</label>
                     <input 
+                            type='password'
                             className='input'
                             placeholder='Confirm password'
                             value={confirmPassword}
@@ -129,7 +132,7 @@ export default function Register() {
                         <span style={{color: 'red'}}>{confirmPasswordErr}</span>
                     ): <></>
                 }
-                <div className='form-group'>
+                <div className='form-group text-center'>
                     <button type='submit' className='submitBtn' onClick={register}>Register</button> 
                 </div>
              </form>

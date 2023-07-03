@@ -12,8 +12,8 @@ router.post('/',add);
 router.post('/login',login);
 router.get('/auth',auth)
 router.get('/',getAll);
-router.get('/:user_id',auth,getById);
-router.put('/:user_id',auth,update);
+router.get('/:user_id',getById);
+router.put('/:user_id',update);
 router.delete('/:user_id',auth,_delete);
 
 module.exports = router;

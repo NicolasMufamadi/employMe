@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
     user: null,
@@ -13,10 +14,16 @@ export const userSlice = createSlice({
        },
        logout(state){
           state.user = null;
-          localStorage.removeItem('token');
+          localStorage.clear();
        }
     }
 })
+
+export const fetchUser = createAsyncThunk('user/fetchUser',async(id,{getState}) => {
+   const res = await axios.get('http://localhost:4444/user/'+id);
+   return res;
+})
+
 
 export const getUser = (state) => state.user.user;
 

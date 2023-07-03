@@ -3,7 +3,7 @@ import './about.css'
 export default function About() {
     return(
         <div>
-            <h1>About employMe</h1>
+            <h1 className='text-center'>About employMe</h1>
             <div className='d-flex justify-content-center container'>
                <p className='text text-wrap'>
                   employMe aims to help employers pick the right employees to fill up the missing players in open roles.

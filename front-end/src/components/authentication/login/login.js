@@ -1,6 +1,6 @@
 import './login.css';
 import { useState } from "react";
-import { Link,useNavigate } from 'react-router-dom';
+import { Link,useNavigate,Navigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 
 import { setUser } from '../../../store/slices/userSlice';
@@ -15,7 +15,7 @@ export default function Login() {
    const [password,setPassword] = useState('');
    const [emailErr,setEmailErr] = useState('');
    const [passwordErr,setPasswordErr] = useState('');
-
+   
 
    async function login(e) {
       
@@ -35,6 +35,7 @@ export default function Login() {
          if(response.data){
             dispatch(setUser(response.data));
             navigate('/');
+            navigate(0);
          }
          
          if(response.passwordErr){
@@ -58,7 +59,7 @@ export default function Login() {
    return(
       <div className='d-flex justify-content-center'>
          <div className='loginForm'>
-              <h1 className='header'>Login</h1>
+              <h1 className='header text-center'>Login</h1>
               <form>
                   <div className='form-group'>
                      <label className='label'>Email address</label>
@@ -91,11 +92,11 @@ export default function Login() {
                         <span style={{color:'red'}}>{passwordErr}</span>
                      ): <></>
                   }
-                  <div className='form-group'>
+                  <div className='form-group text-center'>
                      <button  className='submitBtn' onClick={login}>Login</button>
                   </div>
-              </form>
-              <div>
+              </form>              
+              <div className='text-center'>
                   <p>No account?
                      <Link to='/register'>register</Link>
                   </p>
