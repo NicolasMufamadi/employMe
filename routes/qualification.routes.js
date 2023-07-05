@@ -10,7 +10,7 @@ const getall = require('../components/qualification/getAll');
 router.post('/',add);
 //router.get('/',getall);
 router.get('/:user_id',getUserQualifications);
-router.get('/:qualification_id',getByQualificationId);
+router.get('/getbyqualification/:qualification_id',getByQualificationId);
 router.put('/:qualification_id',update); 
 router.delete('/:qualification_id',deleteQualification);
 
