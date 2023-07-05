@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faGraduationCap} from '@fortawesome/free-solid-svg-icons/faGraduationCap'
 import { getUser } from "../../../../store/slices/userSlice";
 import config from "../../../../config";
+import RemoveQualification from "./remove.qualification";
 
 export default function ViewQualifications() {
  
@@ -30,14 +31,9 @@ export default function ViewQualifications() {
 
 
    const update = (id) => {
-        
-        console.log(id);
         navigate('/myaccount/qualification-info/update-qualification');
         localStorage.setItem("Id",id);
-
    }
-
-
 
     return(
         <div className="mt-4">
@@ -78,18 +74,19 @@ export default function ViewQualifications() {
                                             <h5>Faculty: {item.study_field}</h5>
                                             <h5>Certificate: {item.study_type}</h5>
                                             <h5>From  {item.starting_date.substring(0,10) } To  {item.ending_date.substring(0,10)}</h5>
-                                            <button className="btn btn-info text-light"  onClick={()=> update(item.qualification_id)}>
+                                            <div className="d-flex">
+                                            <button className="btn btn-info text-light" style={{marginRight: '1.5rem'}}  onClick={()=> update(item.qualification_id)}>
                                                 Update
                                             </button>
-                                            <button className="btn btn-danger text-light" style={{marginLeft: "1rem"}}>
-                                                delete
-                                            </button>
+                                                <RemoveQualification qualificationId={item.qualification_id} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))
                     }
+         
                 </div>    
              ): (
                 <div className="d-flex justify-content-center mt-5">
