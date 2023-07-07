@@ -14,8 +14,8 @@ export default function UpdateQualification() {
   const [status, setStatus] = useState("In Progress");
   const [institution, setInstitution] = useState("");
   const [studyField, setStudyField] = useState("");
-  const [startDate, setStartDate] = useState({});
-  const [endDate, setEndDate] = useState({});
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const [institutionErr, setInstitutionErr] = useState("");
   const [degreeErr, setDegreeErr] = useState("");
@@ -58,12 +58,14 @@ export default function UpdateQualification() {
       const response = await request.json();
       console.log(response);
       setQualification(response);
+      setType(response.qualification_type);
       setInstitution(response.institution_name);
       setStatus(response.qualification_status);
       setStudyField(response.study_type);
       setFaculty(response.study_field);
-      // setStartDate(response.starting_date.substring(0,14));
-      //setEndDate(response.ending_date.substring(0,14));
+      console.log(response.starting_date.substring(0,10))
+      setStartDate("");
+      setEndDate("");
     }
 
     getQualification();
@@ -86,14 +88,14 @@ export default function UpdateQualification() {
       setDegreeErr("");
     }
 
-    if (startDate.d === {}) {
+    if (startDate === "") {
       setStartDateErr("Required");
       valid = false;
     } else {
       setStartDateErr("");
     }
 
-    if (endDate === {}) {
+    if (endDate === "") {
       setEndDateErr("Required");
       valid = false;
     } else {
@@ -105,6 +107,7 @@ export default function UpdateQualification() {
 
   async function updateQualification() {
     if (validate()) {
+      console.log(!startDate)
       const request = await fetch('http://localhost:4444/qualification/'+qualification.qualification_id,{
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
@@ -137,6 +140,7 @@ export default function UpdateQualification() {
               type="button"
               className="btn text-light"
               style={{ backgroundColor: "#388087" }}
+              onClick={() => navigate("/myaccount/qualification-info")}
             >
               Add Qualification
             </button>
