@@ -11,7 +11,7 @@ CREATE TABLE users(
     email VARCHAR(100) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     userRole VARCHAR(25) DEFAULT 'Employee',
-    gender CHAR
+    gender VARCHAR(25)
 );
 
 CREATE TABLE address(
