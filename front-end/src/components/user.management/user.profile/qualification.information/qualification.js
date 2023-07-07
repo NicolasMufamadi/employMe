@@ -17,8 +17,8 @@ export default function QualificationInformation() {
   const [status, setStatus] = useState("In Progress");
   const [institution, setInstitution] = useState("");
   const [studyField, setStudyField] = useState("");
-  const [startDate,setStartDate] = useState({});
-  const [endDate,setEndDate] = useState({});
+  const [startDate,setStartDate] = useState("");
+  const [endDate,setEndDate] = useState("");
  // const [qualifications,setQualifications] = useState([]);
 
   const [institutionErr,setInstitutionErr] = useState("");
@@ -71,14 +71,14 @@ export default function QualificationInformation() {
         setDegreeErr("");
       }
 
-      if(startDate.d === {}){
+      if(startDate === ""){
         setStartDateErr("Required");
         valid = false;
       }else{
         setStartDateErr("");
       }
 
-      if(endDate === {}){
+      if(endDate === ""){
         setEndDateErr("Required");
         valid = false;
       }else{
@@ -215,6 +215,11 @@ export default function QualificationInformation() {
                     value={endDate}
                     onChange={(newValue)=> setEndDate(newValue)}           
                 />
+                {
+                  endDateErr ? (
+                    <p className="text-danger">{endDateErr}</p>
+                  ): <></>
+                }
             </div>
           </div>
         </form>
