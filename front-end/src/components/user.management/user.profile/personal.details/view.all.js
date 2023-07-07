@@ -32,17 +32,26 @@ export default function PersonalDetails() {
                         </div>
                     </div>  
                 </div>
-                <h5>Contact Numbers</h5>
+                <h5>Cellphone Numbers</h5>
                 <div className="card mb-3">
                     <div className="card-body text-dark">
                         <div className="d-flex">
-                            <dt className="col-sm-9">{user.telephone && user.number_phone ? "Telephone:  "+ user.telephone +"  Cell Phone: "+ user.number_phone : user.number_phone}</dt>
+                            <dt className="col-sm-9">{user.number_phone}</dt>
+                            <button className="submitBtn" onClick={()=> navigate('/personal-details/update-numbers')}>update</button>
+                        </div>
+                    </div>  
+                </div>
+                <h5>Telephone Numbers</h5>
+                <div className="card mb-3">
+                    <div className="card-body text-dark">
+                        <div className="d-flex">
+                            <dt className="col-sm-9">{user.telephone}</dt>
                             <button className="submitBtn" onClick={()=> navigate('/personal-details/update-numbers')}>update</button>
                         </div>
                     </div>  
                 </div>
                 <h5>Gender</h5>
-                <div className="card mb-3">
+                <div className="card"  style={{marginBottom: '7rem'}}>
                     <div className="card-body text-dark">
                         <div className="d-flex">
                             <dt className="col-sm-9">{user.gender}</dt>
