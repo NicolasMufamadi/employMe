@@ -39,10 +39,13 @@ export default function UpdateGender() {
             <h3 className="mt-3">Update Gender Status</h3>
             <div>
                 <label className="label">Gender</label>
-                <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg exampe" onChange={(e)=> setGender(e.target.value)}>
+                <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg exampe" value={gender} onChange={(e)=> setGender(e.target.value)}>
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
-                    <option value="Other">Other</option>
+                    <option value="Transgender">Transgender</option>
+                    <option value="Gay">Gay</option>
+                    <option value="Lesbian">Lesbian</option>
+                    <option value="Bisexual">Bisexual</option>
                 </select>
             </div> 
             <button className="submitBtn" onClick={updateGender}>
