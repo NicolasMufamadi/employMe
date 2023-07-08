@@ -3,7 +3,7 @@ const db = require('../../database/connection');
 module.exports = (async(req,res)=> {
 
     const qualification_id = req.params.qualification_id;
-    const {qualification_status,institution_name,study_field,study_type,starting_date,ending_date} = req.body;
+    const {qualification_status,qualification_type,institution_name,study_field,study_type,starting_date,ending_date} = req.body;
     
     try {
         
@@ -13,6 +13,7 @@ module.exports = (async(req,res)=> {
         db.query("UPDATE  qualifications SET user_id = ($1), qualification_status = ($2), institution_name = ($3), study_field = ($4), study_type = ($5), starting_date = ($6), ending_date = ($7) WHERE qualification_id = ($8) RETURNING*",[
             qualification.user_id,
             qualification_status ? qualification_status : qualification.qualification_status,
+            qualification_type ? qualification_type : qualification.qualification_type,
             institution_name ? institution_name : qualification.institution_name,
             study_field ? study_field : qualification.study_field,
             study_type ? study_type : qualification.study_type,
