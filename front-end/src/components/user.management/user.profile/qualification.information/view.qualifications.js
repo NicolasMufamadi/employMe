@@ -69,10 +69,10 @@ export default function ViewQualifications() {
                                            <h2>{item.qualification_status}</h2>
                                         </div>
                                         <div className="card-body text-dark">
-                                    
+                                            <h5>Certificate: {item.qualification_type}</h5>
                                             <h5>Institution: {item.institution_name}</h5>
                                             <h5>Faculty: {item.study_field}</h5>
-                                            <h5>Certificate: {item.study_type}</h5>
+                                            <h5>Course: {item.study_type}</h5>
                                             <h5>From  {item.starting_date.substring(0,10) } To  {item.ending_date.substring(0,10)}</h5>
                                             <div className="d-flex">
                                             <button className="btn btn-info text-light" style={{marginRight: '1.5rem'}}  onClick={()=> update(item.qualification_id)}>
