@@ -15,22 +15,6 @@ export default function Profile() {
    let user = useSelector(getUser);
    const navigate = useNavigate();
 
-   const [address,setAddress] = useState({});
-   useEffect(()=> {
-   
-        async function getAddress() {
-
-            const data = await fetch('http://localhost:4444/address/'+user.user_id);
-            const response = await data.json();
-            setAddress(response);
-            console.log(address)
-        }
-
-         getAddress();
-        
-    },[])
-
-
     return(
        
             <div className="container mt-4">
