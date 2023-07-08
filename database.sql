@@ -14,6 +14,8 @@ CREATE TABLE users(
     gender VARCHAR(25)
 );
 
+
+
 CREATE TABLE address(
     address_id SERIAL PRIMARY KEY,
     user_id integer  REFERENCES users(user_id),
@@ -22,9 +24,11 @@ CREATE TABLE address(
     feature VARCHAR(50),
     suburb VARCHAR(50),
     city VARCHAR(50),
-    province VARCHAR(50)
+    province VARCHAR(50),
     zip_code VARCHAR(4)
 );
+
+DROP TABLE IF EXISTS qualifications; 
 
 CREATE TABLE qualifications(
     qualification_id SERIAL PRIMARY KEY,
