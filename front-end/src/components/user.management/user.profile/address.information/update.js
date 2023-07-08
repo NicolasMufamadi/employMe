@@ -24,13 +24,13 @@ export default function UpdateAddressInformation() {
 
     }, [address,user.user_id])
 
-
     const [streetNo, setStreetNo] = useState('');
     const [streetName, setStreetName] = useState('');
     const [optionalBuilding, setOptionalBuilding] = useState('');
     const [suburb, setSuburb] = useState('');
     const [city, setCity] = useState('');
     const [zipCode, setZipCode] = useState('');
+    const [province,setProvince] = useState('Eastern Cape');
 
     const [zipCodeErr, setZipCodeErr] = useState('');
     const [streetNoErr, setStreetNoErr] = useState('');
@@ -87,6 +87,34 @@ export default function UpdateAddressInformation() {
 
     }
 
+    async function createAddress(){
+        
+        if(validateInputs()){
+        
+        const request = await fetch('http://localhost:4444/address/',{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                user_id: user.user_id,
+                street_name: streetName,
+                feature: optionalBuilding,
+                city: city,
+                suburb: suburb,
+                zip_code: zipCode,
+                province: province,
+                street_no: streetNo
+            })
+        })
+
+        const response = await request.json()
+        console.log(response)
+        if(response.rowCount > 0){
+            navigate(0);
+        }
+    }
+
+    }
+
     async function update(){
         
         if(validateInputs()){
@@ -95,11 +123,14 @@ export default function UpdateAddressInformation() {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
+                user_id: user.user_id,
                 street_name: streetName,
                 feature: optionalBuilding,
                 city: city,
                 suburb: suburb,
-                zip_code: zipCode
+                zip_code: zipCode,
+                province: province,
+                street_no: streetNo
             })
         })
 
@@ -142,7 +173,7 @@ export default function UpdateAddressInformation() {
                             <div className="row">
                                 <div className="col-6">
                                     <label className="label">Province</label>
-                                    <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" required>
+                                    <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" value={province} onChange={(e)=> setProvince(e.target.value)} required>
                                         <option value="Eastern Cape">Eastern Cape</option>
                                         <option value="Free State">Free State</option>
                                         <option value="Gauteng">Gauteng</option>
@@ -174,12 +205,23 @@ export default function UpdateAddressInformation() {
                             </div>
                         </div>
                         <div className="card-footer">
-                            <button className="submitBtn mb-5" type="button" onClick={() => update()}>
+                            {
+                                address.address_id ? (
+                            <button className="submitBtn" type="button" onClick={() => update()}>
                                 Save Changes
                             </button>
+
+                                ): (
+                                    <button className="submitBtn" type="button" onClick={() => createAddress()}>
+                                        Create Address
+                                    </button>
+                                )
+                            }
                         </div>
                     </div>
-                
+                {
+                    address.address_id ? (
+
                 <div className="card" style={{height: '25rem',width: '28rem'}}>
                     <div className="text-center card-header">
                         <h3>Current Address</h3> 
@@ -189,9 +231,12 @@ export default function UpdateAddressInformation() {
                         <h5 className="fs-4">Complex/Business: {address.feature}</h5>
                         <h5 className="fs-4">Suburb: {address.suburb}</h5>
                         <h5 className="fs-4">City: {address.city}</h5>
+                        <h5 className="fs-4">Province: {address.province}</h5>
                         <h5 className="fs-4">Area code: {address.zip_code}</h5>
                     </div>
                 </div>
+                    ) : <></>
+                }
             </div>
         </div>
     )
