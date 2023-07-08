@@ -108,7 +108,9 @@ export default function QualificationInformation() {
       });
 
       const response = await request.json()
-      console.log(response)
+     if(response.qualification_id){
+         navigate("/myaccount/qualification-info/view-qualifications");
+     }
     }
   }
 
