@@ -2,34 +2,51 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import { fetchUser, getUser } from '../../store/slices/userSlice';
+import { fetchUser, getUser, logout } from '../../store/slices/userSlice';
 import SideBar from './sideBar/sideBar';
+import config from '../../config';
 
 
 export default function Header() {
 
   const [isEmployee,setEmployee] = useState(false);
-  const user = useSelector(getUser);
+  const [user,setUser] = useState(useSelector(getUser));
  
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
+  useEffect(()=>{
+    async function verifyIsLoggedIn(){
+          const request = await fetch(`${config.baseURL.endPoint}/user/auth`,{headers: {'Authorization': 'Bearer '+ localStorage.getItem("token")} });
+          const response = await request.json();    
+          console.log(response)  
+          if(response.err){
+               logOut()
+          }
+    }
+     
+    verifyIsLoggedIn();
+
+  },[])
+
 
 
   useEffect(()=>{
-   //  console.log(user);
+     console.log(user);
        if(user && user.userrole === "Employee"){
            setEmployee(true);
            dispatch(fetchUser(user.user_id))
        }
 
-  },[isEmployee,user])
+  },[user,dispatch])
   
   
     const logOut = () => {
       localStorage.clear();
       navigate('/login');
-      navigate(0);
+     // navigate(0);
+      setUser(null);
+      setEmployee(false);
     }
 
 
