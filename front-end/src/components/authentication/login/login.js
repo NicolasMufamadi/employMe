@@ -32,7 +32,8 @@ export default function Login() {
          const request = await fetch('http://localhost:4444/user/login',requestOptions);
          const response = await request.json();
          // console.log(response)
-         if(response.data){
+         if(response.data){   
+            localStorage.setItem("token",response.token);
             dispatch(setUser(response.data));
             navigate('/');
             navigate(0);
