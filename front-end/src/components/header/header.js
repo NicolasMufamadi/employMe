@@ -2,15 +2,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import { fetchUser, getUser, logout } from '../../store/slices/userSlice';
+import { fetchUser, getUser } from '../../store/slices/userSlice';
 import SideBar from './sideBar/sideBar';
 import config from '../../config';
 
 
 export default function Header() {
-
-  const [isEmployee,setEmployee] = useState(false);
+  
   const [user,setUser] = useState(useSelector(getUser));
+  const [userRole,setRole] = useState(null);
  
   const navigate = useNavigate();
   const dispatch = useDispatch()
@@ -32,10 +32,14 @@ export default function Header() {
 
 
   useEffect(()=>{
-     console.log(user);
        if(user && user.userrole === "Employee"){
-           setEmployee(true);
-           dispatch(fetchUser(user.user_id))
+         //  setEmployee(true);
+            setRole("Employee")
+            dispatch(fetchUser(user.user_id))
+       }
+
+       if(user && user.userrole === "Admin"){
+          setRole("Admin")
        }
 
   },[user,dispatch])
@@ -44,19 +48,18 @@ export default function Header() {
     const logOut = () => {
       localStorage.clear();
       navigate('/login');
-     // navigate(0);
       setUser(null);
-      setEmployee(false);
+      setRole(null);
     }
 
 
     return(
         <nav className='navbar navbar-light'>
         <div className='container-fluid'>
-          <SideBar />
+          <SideBar role={userRole}/>
           <div className='d-flex'>
             {
-              isEmployee ? (
+              userRole === "Employee" ? (
                 <>
                   <Link className='link'>My Applications</Link>
                   <Link className='link' to='myaccount'>My Account</Link>

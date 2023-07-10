@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from "react";
+import { React, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
+import {faXmark} from '@fortawesome/free-solid-svg-icons/faXmark';
 import { Link } from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { getUser } from "../../../store/slices/userSlice";
 
-const SideBar = () => {
+const SideBar = ({role}) => {
 
-    const user = useSelector(getUser);
-    const [isAdmin,setIsAdmin] = useState(false);
+   const [sideBar,setSideBar] = useState(false);
 
-   useEffect(()=>{
-    
-    if( user && user.userrole === "Admin"){
-        setIsAdmin(true);
-    }
+   const controlSideBar = () => setSideBar(!sideBar)
 
-   },[isAdmin])
+   const SetSideBarButton = () => {
+        if(sideBar){
+            return <FontAwesomeIcon icon={faXmark} className='icon'  onClick={() => controlSideBar()} />
+        }else{
+            return <FontAwesomeIcon icon={faBars} className='icon' onClick={() => controlSideBar()} />
+        }
 
+   }
+
+   
+   
    return(
         <div>
             {
-                isAdmin ? (
-                    <FontAwesomeIcon icon={faBars} className='icon' onClick={() => console.log('Hello React')} />
+                role === "Admin" ? (
+                    <SetSideBarButton  /> 
                 ):
                 <></>
             }
