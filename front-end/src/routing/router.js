@@ -15,6 +15,7 @@ import UpdateAddressInformation from '../components/user.management/user.profile
 import QualificationInformation from '../components/user.management/user.profile/qualification.information/qualification';
 import ViewQualifications from '../components/user.management/user.profile/qualification.information/view.qualifications';
 import UpdateQualification from '../components/user.management/user.profile/qualification.information/update.qualification';
+import ViewUsers from '../components/user/manage.user';
 
 export default function Router() {
 
@@ -37,6 +38,7 @@ export default function Router() {
                 <Route path='/personal-details/update-email' element={<UpdateEmail />} /> 
                 <Route path='/personal-details/update-numbers' element={<UpdateContacts />} />
                 <Route path='/personal-details/update-gender' element={<UpdateGender />} />
+                <Route path='/manageusers/view-users' element={<ViewUsers />}/>
             </Routes>
         </div>
     )
