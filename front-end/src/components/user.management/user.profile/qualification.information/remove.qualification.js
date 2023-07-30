@@ -31,7 +31,7 @@ return(
     <div>
        
 <button type="button" className="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=> getId()}>
-  delete
+  Delete
 </button>
 
 
