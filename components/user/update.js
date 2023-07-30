@@ -22,7 +22,7 @@ module.exports = async (req,res) =>{
             Id
         ]);
  
-        res.send(update.rows[0])
+        res.send({success: update.rows[0]})
        
     } catch (error) {
         res.send(error)
