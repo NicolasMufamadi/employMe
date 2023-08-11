@@ -16,7 +16,8 @@ import QualificationInformation from '../components/user.management/user.profile
 import ViewQualifications from '../components/user.management/user.profile/qualification.information/view.qualifications';
 import UpdateQualification from '../components/user.management/user.profile/qualification.information/update.qualification';
 import ViewUsers from '../components/user/manage.user';
-
+import Faqs from '../components/Faqs';
+import ViewApplications from '../components/application/view';
 export default function Router() {
 
     return(
@@ -27,7 +28,7 @@ export default function Router() {
                 <Route path='/register' element={<Register />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/quotes' element={<Quotes />} />
-                <Route path='/myapplications' />
+                <Route path='/myapplications' element={<ViewApplications/>} />
                 <Route path='/myaccount' element={<Profile />}/>
                 <Route path='/personal-details' element={<PersonalDetails />} />
                 <Route path='/update-address' element={<UpdateAddressInformation />} />
@@ -39,6 +40,7 @@ export default function Router() {
                 <Route path='/personal-details/update-numbers' element={<UpdateContacts />} />
                 <Route path='/personal-details/update-gender' element={<UpdateGender />} />
                 <Route path='/manageusers/view-users' element={<ViewUsers />}/>
+                <Route path='/faqs' element={<Faqs />} />
             </Routes>
         </div>
     )
