@@ -111,14 +111,16 @@ const Header = () => {
             ) : <></>
           }
           <LogoWrap>
+            <Link style={{textDecoration: 'none',color: '#388087'}} to='/'>
               <h4 className='fw-bold'>EmployMe</h4>
+            </Link>
           </LogoWrap>
           <Links>
           <div className='d-flex'>
             {
               userRole === "Employee" ? (
                 <>
-                  <Link className='link'>My Applications</Link>
+                  <Link className='link'to="/myapplications">My Applications</Link>
                   <Link className='link' to='myaccount'>My Account</Link>
                 </>
               ): 
@@ -126,6 +128,7 @@ const Header = () => {
             }
             <Link to='/about' className='link'>About</Link>
             <Link to='/quotes' className='link'>Quotes</Link>
+            <Link to="/faqs" className='link'>FAQs</Link>
             {
               user ? (
                 <Link to='/login' className='link' onClick={()=>logOut()}>Logout</Link>
