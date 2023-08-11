@@ -41,3 +41,18 @@ CREATE TABLE qualifications(
     starting_date DATE,
     ending_date DATE
 );
+
+CREATE TABLE jobs(
+    job_id SERIAL PRIMARY KEY,
+    job_name VARCHAR(50),
+    job_skills VARCHAR,
+    job_description VARCHAR
+);
+
+CREATE TABLE applications(
+   application_id SERIAL PRIMARY KEY,
+   user_id integer REFERENCES users(user_id),
+   job_id integer REFERENCES jobs(job_id),
+   job VARCHAR,
+   status VARCHAR DEFAULT 'Pending'
+);
