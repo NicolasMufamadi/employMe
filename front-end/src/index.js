@@ -8,6 +8,7 @@ import Header from './header';
 import Home from './components/home';
 import Login from './components/Authentication/login/login';
 import Register from './components/Authentication/register/register';
+import MyAccount from './components/profile/myaccount';
 import './index.css';
 
 
@@ -20,7 +21,8 @@ root.render(
       <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
+          <Route path='/register' element={<Register />}></Route>
+          <Route path='/myaccount' element={<MyAccount />}></Route>
       </Routes>
   </Router>
   </PersistGate>
