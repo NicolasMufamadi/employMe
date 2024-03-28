@@ -67,7 +67,7 @@ function Header() {
      return(
       <>
           <LinkButton>MyApplications</LinkButton>
-          <LinkButton>MyAccount</LinkButton>
+          <LinkButton onClick={() => navigate('/myaccount')}>MyAccount</LinkButton>
           <LinkButton>Quotes</LinkButton>
           <LinkButton onClick={()=> handleLogout()}>Logout</LinkButton>
       </>
