@@ -17,7 +17,7 @@ module.exports = async (req,res) =>{
               }
 
         }else{
-            res.send({denied: "Please change user role to Employee and then proceed with the delete"})
+            res.send({denied: "You cannot delete this user"})
         }
         
     } catch (error) {

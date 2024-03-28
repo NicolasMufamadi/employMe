@@ -1,108 +1,106 @@
-import './login.css';
-import { useState } from "react";
-import { Link,useNavigate,Navigate } from 'react-router-dom';
-import { useSelector,useDispatch } from 'react-redux';
+import { useState} from 'react';
+import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import  Typography  from '@mui/material/Typography';
+import  Container from '@mui/material/Container';
+import  FormControl  from '@mui/material/FormControl';
+import  InputLabel from '@mui/material/InputLabel';
+import  FilledInput  from '@mui/material/FilledInput';
+import  Button  from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { login } from '../../../store/slices/auth.slice';
 
-import { setUser } from '../../../store/slices/userSlice';
 
 export default function Login() {
-   
-   const navigate = useNavigate();
-   const dispatch = useDispatch();
-  // const user = useSelector(getUser);
 
-   const [email,setEmail] = useState('');
-   const [password,setPassword] = useState('');
-   const [emailErr,setEmailErr] = useState('');
-   const [passwordErr,setPasswordErr] = useState('');
-   
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [showPassword,setShowPassword] = useState(false);
 
-   async function login(e) {
-      
-      e.preventDefault();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  //const status = useSelector((state) => state.auth.status)
+  
 
-      const requestOptions = {
-         method: "POST",
-         headers: {'Content-Type': 'application/json'},
-         body: JSON.stringify({email: email, password: password})
-      };
+  const handleClickPassword = () => setShowPassword((show) => !show);
 
-      try {
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault()
+  }
 
-         const request = await fetch('http://localhost:4444/user/login',requestOptions);
-         const response = await request.json();
-         // console.log(response)
-         if(response.data){   
-            localStorage.setItem("token",response.token);
-            dispatch(setUser(response.data));
-            navigate('/');
-            navigate(0);
-         }
-         
-         if(response.passwordErr){
-            setPasswordErr(response.passwordErr);
-         }else{
-            setPasswordErr('')
-         }
-         
-         if(response.emailErr) {
-            setEmailErr(response.emailErr);
-         }else{
-            setEmailErr('')
-         }
-
-      } catch (error) {
-         console.log(error);
+  const handleLogin = async() =>{
+      const data = {
+        "email": email,
+        "password": password 
       }
+    const res = await dispatch(login(data))
+    
+    if(res.type === "auth/login/rejected"){
+       toast.error('Incorrect password or email')
+    }
 
-   }
+    if(res.type === "auth/login/fulfilled"){
+      navigate('/')
+    }
 
-   return(
-      <div className='d-flex justify-content-center'>
-         <div className='loginForm'>
-              <h1 className='header text-center'>Login</h1>
-              <form>
-                  <div className='form-group'>
-                     <label className='label'>Email address</label>
-                     <input 
-                             type='email' 
-                             className='input' 
-                             placeholder='Enter email'
-                             value={email}
-                             onChange={(e)=>setEmail(e.target.value)}
-                     />
-                  </div>
-                  {
-                     emailErr ? (
-                        <span style={{color: 'red'}}>{emailErr}</span>
-                     ) : <></>
-                  }
-                  
-                  <div className='form-group'>
-                     <label className='label'>Password</label>
-                     <input 
-                             type='password' 
-                             className='input' 
-                             placeholder='Enter Password'
-                             value={password}
-                             onChange={(e)=>setPassword(e.target.value)}
-                     />
-                  </div>
-                  {
-                     passwordErr ? (
-                        <span style={{color:'red'}}>{passwordErr}</span>
-                     ): <></>
-                  }
-                  <div className='form-group text-center'>
-                     <button  className='submitBtn' onClick={login}>Login</button>
-                  </div>
-              </form>              
-              <div className='text-center'>
-                  <p>No account?
-                     <Link to='/register'>register</Link>
-                  </p>
-              </div>
-         </div>
-      </div>
-   )
+  }
+  
+
+
+  return (
+    <>
+      <ToastContainer style={{marginTop: "50px"}} />
+      <Typography variant='h1' color="#17252A" style={{textAlign: 'center',marginTop: "5%"}}>Login</Typography>
+      <Container style={{textAlign: 'center'}}>
+        <FormControl sx={{m: 2, width: '50%'}}>
+          <InputLabel htmlFor="email">email</InputLabel>
+          <FilledInput  id='email' type='email' color='#17252A'  onChange={(e)=>setEmail(e.target.value)} ></FilledInput>      
+        </FormControl>
+
+        <FormControl sx={{m: 2, width: '50%'}}>
+          <InputLabel htmlFor="password">password</InputLabel>
+          <FilledInput
+                id='password' 
+                type={showPassword ? 'text' : 'password' }  
+                color='#17252A'  
+                onChange={(e)=> setPassword(e.target.value)} 
+                endAdornment={
+                  <InputAdornment position='end'>
+                    <IconButton 
+                        aria-label='toggle  password visibility'
+                        onClick={handleClickPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+
+                    </IconButton>
+                  </InputAdornment>
+                }
+          >
+          </FilledInput>      
+        </FormControl>
+
+        <div style={{marginLeft: "38%"}}>
+           <p>No Account? <Link style={{color: "#17252A"}} to="/register">Register</Link></p>
+        </div>
+
+        <div>
+          <Button variant="contained" 
+                  style={{backgroundColor: "#3AAFA9",padding: "10px 60px 10px 60px "}}
+                  onClick={()=> handleLogin()}
+          >
+                    Login
+          </Button>
+        </div>
+        
+      </Container>
+    </>
+  )
 }

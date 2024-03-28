@@ -18,13 +18,13 @@ module.exports = async (req,res) => {
                 })
                 res.status(200).send({data: auth.rows[0],token: token});
             }else{
-            res.status(404).send({passwordErr: "Password Incorrect"});
+            res.status(404).send({err: "Wrong password or email"});
         }
      }else{
-        res.status(404).send({emailErr: "Email does not exist"});
+        res.status(404).send({err: "Wrong password or email"});
      }
     } catch (error) {
-        res.status(404).send(error);
+        res.status(404).send({err: "Wrong password or email"});
     }
 
 

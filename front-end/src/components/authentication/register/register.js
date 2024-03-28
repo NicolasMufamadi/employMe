@@ -1,142 +1,146 @@
-import '../login/login.css';
-import { useState } from 'react';
-import  isEmail  from 'validator/lib/isEmail';
+import { useState } from 'react'; 
+import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import axiosBaseUrl from '../../../config/base.url';
+import  Typography  from '@mui/material/Typography';
+import Container from '@mui/material/Container'
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import FilledInput from '@mui/material/FilledInput';
+import Button  from '@mui/material/Button';
 
 export default function Register() {
 
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
-    const [confirmPassword,setConfimPAssword] = useState('');
-    
-    const [emailErr,setEmailErr] = useState('');
-    const [passwordErr,setPasswordErr] = useState('');
-    const [confirmPasswordErr,setConfimPAsswordErr] = useState('');
+    const [formData,setFormData] = useState({
+        email: '',
+        password: '',
+        confirmPassword: ''
+    }); 
+    const [emailErr,setEmailErr] = useState(false);
+    const [passwordErr,setPasswordErr] = useState(false);
+    const [confirmPasswordErr,setConfirmPasswordErr] = useState(false);
 
     const navigate = useNavigate();
+    
 
-    const register = async (e) =>{
-        
-        e.preventDefault();
+    const handleSubmit = () => {
 
-        const requestOptions = {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email: email, password: password})
-        };
-        
-        if(validate()){
-        try {
-            
-            const request = await fetch('http://localhost:4444/user/',requestOptions);
-            const response = await request.json();
-            console.log(response)
-            if(response.err){
-                setEmailErr(response.err);
-            }else{
-                navigate('/login');
-            }
-
-        } catch (error) {
-            console.log(error)
+        if(validateForm()){
+            axiosBaseUrl.post('/user/',{
+                email: formData.email,
+                password: formData.password
+            }).then(response => {
+                if(response){
+                    navigate('/login')
+                }
+            }).catch(err =>{
+                setEmailErr(true)
+                toast.error("Email already exists")
+            })
         }
-
-      }
-
-
+  
     }
 
-    function validate(){
+    const validateForm = () => {
         
-        let valid = true;
+        let valid = true
+        var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-        let passwordStrength = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})");
-
-        if(!isEmail(email)){
-            setEmailErr('Enter a valid email address')
-            valid = false;
-        }else if(email === ''){
-           setEmailErr('Email address required');
+        if(formData.email === ''){
+            setEmailErr(true)
+            toast.error('Email is required')
+            valid = false
         }else{
-            setEmailErr('');
+            setEmailErr(false)
+            valid = true
+        }
+        
+        if(!re.test(formData.password)){
+            setPasswordErr(true)
+            toast.error("Password must match minimum requirements")
+            valid = false
+        }else{
+            setPasswordErr(false)
+            valid = true
         }
 
-        if(confirmPassword !== password){
-            setConfimPAsswordErr('passwords not matching');
-            valid = false;
+
+        if(formData.password !== formData.confirmPassword){
+            setConfirmPasswordErr(true)
+            toast.error("passwords not matching")
+            valid = false
         }else{
-            setConfimPAsswordErr('');
+            setConfirmPasswordErr(false)
+            valid = true
         }
 
-        if(!passwordStrength.test(password)){
-             setPasswordErr('At least 8 characters, 1 uppercase,1 lowercase, 1 digit & 1 special character');
-             valid = false;
-        }else{
-            setPasswordErr('');
-        }
-
-        return valid;
+        return valid
 
     }
 
     return(
-        <div className="d-flex justify-content-center">
-             <div className='loginForm'>
-                 <h1 className='header text-center'>Register</h1>
-             <form>
-                <div className='form-group'>
-                    <label className='label'>Email</label>
-                    <input 
-                            type='email'
-                            className='input' 
-                            placeholder='Enter email'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                {
-                    emailErr ? (
-
-                        <span style={{color: 'red'}}>{emailErr}</span>
-                    ): <></>
-                }
-                <div className='form-group'>
-                    <label className='label'>Password</label>
-                    <input 
-                            type='password'
-                            className='input' 
-                            placeholder='Enter Pasword'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                    /> 
-                </div>
-                {
-                    passwordErr ? (
-
-                        <span style={{color: 'red'}}>{passwordErr}</span>
-                    ): <></>
-                }
-                <div className='form-group'>
-                    <label className='label'>Confirm password</label>
-                    <input 
-                            type='password'
-                            className='input'
-                            placeholder='Confirm password'
-                            value={confirmPassword}
-                            onChange={(e)=> setConfimPAssword(e.target.value)}
-                    /> 
-                </div>
-                {
-                    confirmPasswordErr ? (
-
-                        <span style={{color: 'red'}}>{confirmPasswordErr}</span>
-                    ): <></>
-                }
-                <div className='form-group text-center'>
-                    <button type='submit' className='submitBtn' onClick={register}>Register</button> 
-                </div>
-             </form>
-             </div>
-        </div>
+        <>
+           <ToastContainer style={{marginTop: "50px"}}/>
+           <Container>
+                <Typography variant='h3'style={{marginTop: '50px'}}>Create an account</Typography>
+             <div>
+                <FormControl  sx={{mt: 2}} style={{width: '50%'}}>
+                    <InputLabel htmlFor='email'>Email</InputLabel>
+                    <FilledInput 
+                        id='email'
+                        type='email'
+                        color='#17252A'
+                        error={emailErr}
+                        onChange={(e) => setFormData({...formData,email: e.target.value})}
+                    >
+                    </FilledInput>
+                </FormControl>
+            </div>
+            <div>
+                <FormControl  sx={{mt: 2}} style={{width: '50%'}}>
+                    <InputLabel htmlFor='password'>Password</InputLabel>
+                    <FilledInput 
+                        id='password'
+                        type='password'
+                        color='#17252A'
+                        error={passwordErr}
+                        onChange={(e) => setFormData({...formData,password: e.target.value})}
+                    >
+                    </FilledInput>
+                    {
+                        passwordErr ?
+                        (
+                            <p style={{color: 'red'}}>Password must have min 8 characters, with at least a symbol, upper and lower case letters and a number</p>
+                        ): 
+                        (
+                            <></>
+                        )
+                    }
+                </FormControl>
+            </div>
+            <div>
+                <FormControl  sx={{mt: 2}} style={{width: '50%'}}>
+                    <InputLabel htmlFor='confirm-password'>Confirm Password</InputLabel>
+                    <FilledInput 
+                        id='confirm-password'
+                        type='password'
+                        color='#17252A'
+                        error={confirmPasswordErr}
+                        onChange={(e) => setFormData({...formData,confirmPassword: e.target.value})}
+                        
+                    >
+                    </FilledInput>
+                </FormControl>
+            </div>
+            <div style={{marginTop: "15px"}}>
+                <Button variant="contained" 
+                        style={{backgroundColor: "#3AAFA9",padding: "10px 60px 10px 60px "}}
+                        onClick={() => handleSubmit()}
+                >
+                    Register
+                </Button>
+            </div>
+           </Container>
+        </>
     )
 }

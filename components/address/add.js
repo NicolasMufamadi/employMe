@@ -1,6 +1,6 @@
 const db = require('../../database/connection');
 
-module.exports = ((req,res) => {;
+module.exports = ((req,res) => {
 
     const { user_id,street_name,feature,suburb,city,zip_code,province,street_no } = req.body;
 

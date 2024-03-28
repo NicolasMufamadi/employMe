@@ -11,12 +11,13 @@ CREATE TABLE users(
     email VARCHAR(100) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     userRole VARCHAR(25) DEFAULT 'Employee',
-    gender VARCHAR(25)
+    gender VARCHAR(25),
+    organization VARCHAR(50) DEFAULT 'EmployMe'
 );
 
+DROP TABLE IF EXISTS adress;
 
-
-CREATE TABLE address(
+CREATE TABLE adress(
     address_id SERIAL PRIMARY KEY,
     user_id integer  REFERENCES users(user_id),
     street_no integer,
@@ -39,20 +40,41 @@ CREATE TABLE qualifications(
     study_field VARCHAR(100),
     study_type VARCHAR(100),
     starting_date DATE,
-    ending_date DATE
+    ending_date DATE,
+    skills text[]
 );
+
+DROP TABLE IF EXISTS jobs;
 
 CREATE TABLE jobs(
     job_id SERIAL PRIMARY KEY,
     job_name VARCHAR(50),
-    job_skills VARCHAR,
-    job_description VARCHAR
+    job_required_skills VARCHAR[],
+    job_description VARCHAR,
+    job_qualification TEXT,
+    Job_location    TEXT,
+    job_company_name VARCHAR(100),
+    job_avg_salary  TEXT
 );
+
+DROP TABLE IF EXISTS applications;
 
 CREATE TABLE applications(
    application_id SERIAL PRIMARY KEY,
    user_id integer REFERENCES users(user_id),
    job_id integer REFERENCES jobs(job_id),
-   job VARCHAR,
-   status VARCHAR DEFAULT 'Pending'
+   job_name VARCHAR(50),
+   user_names VARCHAR(50),
+   user_email VARCHAR(50),
+   user_gender VARCHAR(10),
+   job_match DECIMAL,
+   application_status VARCHAR DEFAULT 'Pending'
 );
+
+CREATE TABLE companies(
+    company_id SERIAL PRIMARY KEY,
+    company_manager_id  integer REFERENCES users(user_id),
+    company_registration_no VARCHAR(25),
+    company_address VARCHAR(100),
+    company_logo BYTEA 
+)
