@@ -7,7 +7,7 @@ module.exports = async (req,res) =>{
  
     try {
         const getbyId = await db.query("SELECT * FROM Users WHERE user_id = ($1)", [Id])
-        console.log(getbyId)
+
         const user = getbyId.rows[0];
 
         const update = await db.query("UPDATE Users SET first_name = ($1), middle_name = ($2), last_name = ($3), email = ($4), number_phone = ($5), telephone = ($6), gender = ($7), userrole = ($8) WHERE user_id = ($9) RETURNING *", [
@@ -21,10 +21,10 @@ module.exports = async (req,res) =>{
             userrole ? userrole : user.userrole,
             Id
         ]);
- 
-        res.send({success: update.rows[0]})
+        
+        res.status(201).send({data: update.rows[0]});
        
     } catch (error) {
-        res.send(error)
+        res.status(502).send(error)
     }
 }
