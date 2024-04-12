@@ -78,3 +78,10 @@ CREATE TABLE companies(
     company_address VARCHAR(100),
     company_logo BYTEA 
 )
+
+CREATE TABLE otp(
+    otp_id SERIAL PRIMARY KEY,
+    otp INTEGER,
+    otp_exp_time TIME, 
+    otp_email VARCHAR(100)
+)
