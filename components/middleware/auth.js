@@ -10,7 +10,7 @@ module.exports = async(req,res,next) => {
             
             const decryptedToken = jwt.verify(token,process.env.SECRET)
             if(decryptedToken){
-                res.status(200).send({isLoggedIn: decryptedToken});
+                res.status(200).send({data: decryptedToken});
             }
          //   next();
             
