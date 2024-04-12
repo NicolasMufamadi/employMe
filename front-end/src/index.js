@@ -1,3 +1,4 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -9,8 +10,9 @@ import Home from './components/home';
 import Login from './components/Authentication/login/login';
 import Register from './components/Authentication/register/register';
 import MyAccount from './components/profile/myaccount';
-import './index.css';
-
+import ManageProfile from './components/profile/manageprofile/manageprofile';
+import ProtectedRoutes from './utils/protectedRoutes';
+import ChangePassword from './components/profile/manageprofile/change-password';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,10 +21,14 @@ root.render(
   <Router>
       <Header />
       <Routes>
+          <Route element={<ProtectedRoutes />}>
+              <Route path='/myaccount' element={<MyAccount />}></Route>
+              <Route path='/myaccount/manage-profile' element={<ManageProfile />}></Route>
+              <Route path='/myaccount/manage-profile/change-password' element={<ChangePassword />}></Route>
+          </Route>
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
-          <Route path='/myaccount' element={<MyAccount />}></Route>
       </Routes>
   </Router>
   </PersistGate>
