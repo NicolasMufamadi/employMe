@@ -1,13 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box'
 import PersonIcon from '@mui/icons-material/Person';
-import MyLocationIcon from '@mui/icons-material/MyLocation';
+import MyLocationIcon from '@mui/icons-material/LocationCity';
 import SchoolIcon from '@mui/icons-material/School';
 import IconButton  from '@mui/material/IconButton';
 
 
 
 export default function MyAccount(){
+
+    const navigate = useNavigate();
 
     return(
        <Container>
@@ -27,8 +30,8 @@ export default function MyAccount(){
 
                >
                 <div>
-                    <IconButton>
-                        <PersonIcon  sx={{fontSize: 200,color: '#fff'}} On/>
+                    <IconButton onClick={() => navigate('/myaccount/manage-profile') }>
+                        <PersonIcon  sx={{fontSize: 200,color: '#fff'}}/>
                     </IconButton>
                     <p style={{fontWeight: 'bold'}}>Profile</p>
                 </div>
@@ -49,7 +52,7 @@ export default function MyAccount(){
                >
                 <div>
                     <IconButton>
-                        <MyLocationIcon  sx={{fontSize: 200,color: '#fff'}} On/>
+                        <MyLocationIcon  sx={{fontSize: 200,color: '#fff'}} />
                     </IconButton>
                     <p style={{fontWeight: 'bold'}}>Address</p>
                 </div>
@@ -70,7 +73,7 @@ export default function MyAccount(){
                >
                 <div>
                     <IconButton>
-                        <SchoolIcon  sx={{fontSize: 200,color: '#fff'}} On/>
+                        <SchoolIcon  sx={{fontSize: 200,color: '#fff'}} />
                     </IconButton>
                     <p style={{fontWeight: 'bold'}}>Education</p>
                 </div>
