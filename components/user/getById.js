@@ -7,7 +7,7 @@ module.exports = async (req,res) => {
     try {
         const user = await db.query("SELECT * FROM Users WHERE user_id = ($1)",[Id]);
         if(user.rows[0]){
-            res.status(200).send(user.rows[0]);
+            res.status(200).send({data: user.rows[0]});
         }else{
             res.status(404).send({err: "User not found"});
         }
