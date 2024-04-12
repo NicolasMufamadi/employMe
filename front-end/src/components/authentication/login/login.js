@@ -87,8 +87,9 @@ export default function Login() {
           </FilledInput>      
         </FormControl>
 
-        <div style={{marginLeft: "38%"}}>
-           <p>No Account? <Link style={{color: "#17252A"}} to="/register">Register</Link></p>
+        <div style={{display: 'flex', justifyContent: 'space-between' ,maxWidth: '50%',textAlign: 'center',marginLeft: "25%"}}>
+          <Link style={{color: "#17252A",marginTop: '15px'}}>Forget Password</Link> 
+          <p>No Account? <Link style={{color: "#17252A"}} to="/register">Register</Link></p>
         </div>
 
         <div>
