@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout, isAuthenticated } from './store/slices/auth.slice';
+import { logout } from './store/slices/auth.slice';
 
 const darkTheme = createTheme({
   palette: {
@@ -50,17 +50,6 @@ function Header() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  useEffect(()=>{
-    async function verifyAuthentication(){
-      if(user !== null){
-        const response = await dispatch(isAuthenticated(user.token))
-        if(response.type === 'auth/isAuthenticated/rejected') {
-          navigate('/login')
-        }
-      }
-    }
-    verifyAuthentication()
-  })
 
 
   const LoggedIn = () => {
