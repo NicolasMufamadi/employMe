@@ -13,4 +13,9 @@ code {
 .link{
   text-decoration: none;
   color: black;
+  font-weight: 700;
+}
+
+.logo:hover{
+  cursor: pointer;
 }
