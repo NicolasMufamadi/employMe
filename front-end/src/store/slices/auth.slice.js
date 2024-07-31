@@ -10,12 +10,16 @@ const initialState = {
 
 export const login = createAsyncThunk('auth/login', async (data) => {
    const response = await axiosBaseUrl.post('user/login',{email: data.email,password: data.password})
-   console.log(response)
    return response.data 
 })
 
-export const getUser = createAsyncThunk('auth/getUser',async(id) =>{
-    const response = await axiosBaseUrl.get(`/user/${id}`)
+export const getUser = createAsyncThunk('auth/getUser',async() =>{
+    const response = await axiosBaseUrl.get(`/user/auth`,{
+        headers: {
+            "Authorization": 'Bearer '+ localStorage.getItem('jwtToken')
+        }
+    })
+    console.log(response)
     return response.data
 })
 
@@ -36,7 +40,7 @@ export const authSlice = createSlice({
     reducers: {
         logout(state,action){
             state.user = null;
-            state.userToken = null;
+            localStorage.removeItem('jwtToken')
             state.status = ''
         },
 
@@ -45,21 +49,21 @@ export const authSlice = createSlice({
         builder
         .addCase(login.fulfilled,(state,action) => {
             const user = action.payload
-            console.log(user)
             state.user = user
             state.userToken = user.token
             state.status = 'LoggedIn'
+            localStorage.setItem('jwtToken',user.token)
         })
         .addCase(login.rejected,(state,action) => {
             state.status = 'error'
-            state.user = null
-            state.userToken = null
         })
         .addCase(getUser.fulfilled,(state,action) => {
             const user = action.payload
             state.user = user;
         })
         .addCase(getUser.rejected,(state,action) => {
+            state.status = "Unathorized"
+            localStorage.removeItem('jwtToken')
             state.user = null
         })
 
