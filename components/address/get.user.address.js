@@ -7,10 +7,15 @@ module.exports = ( async(req,res) => {
     try {
         
         const userAddress =  await db.query("SELECT * FROM address WHERE user_id = ($1)",[user_id]);
-        res.status(200).send(userAddress.rows[0]);
+        console.log(userAddress)
+       if(userAddress.rowCount > 0){
+            res.status(200).send({data: userAddress.rows});
+       }else{
+           res.status(200).send({data: []});
+       }
 
     } catch (error) {
-       res.status(404).send(error);
+        res.status(500).send(error)
     }
 
 })
