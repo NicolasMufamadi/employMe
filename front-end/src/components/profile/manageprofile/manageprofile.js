@@ -9,7 +9,6 @@ import Box  from '@mui/material/Box';
 import Breadcrumbs  from '@mui/material/Breadcrumbs';
 import Stack  from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import TextField  from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import FilledInput  from '@mui/material/FilledInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -19,7 +18,7 @@ import { getUser, updateUser } from '../../../store/slices/auth.slice';
 function ManageProfile() {
 
     const currentUser = useSelector(state => state.auth.user);
-    const token = useSelector(state => state.auth.userToken)
+//    const token = useSelector(state => state.auth.userToken)
     const [user,setUser] = useState({data: currentUser.data})
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -135,14 +134,6 @@ function ManageProfile() {
             console.log("No changes made")
         }
 
-
-    }
-
-    const handleUpdateEmail = () => {
-
-    }
-
-    const handleUpdatePassword = () => {
 
     }
 
