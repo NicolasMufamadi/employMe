@@ -3,7 +3,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axiosBaseUrl from '../../../config/base.url';
 import  Typography  from '@mui/material/Typography';
-import Container from '@mui/material/Container'
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import FilledInput from '@mui/material/FilledInput';
@@ -81,8 +80,8 @@ export default function Register() {
     return(
         <>
            <ToastContainer style={{marginTop: "50px"}}/>
-           <Container>
-                <Typography variant='h3'style={{marginTop: '50px'}}>Create an account</Typography>
+           <div style={{textAlign: 'center',marginTop: "5%"}}>
+           <Typography variant='h1' color="#17252A" style={{textAlign: 'center',marginTop: "5%"}}>Register</Typography>
              <div>
                 <FormControl  sx={{mt: 2}} style={{width: '50%'}}>
                     <InputLabel htmlFor='email'>Email</InputLabel>
@@ -140,7 +139,7 @@ export default function Register() {
                     Register
                 </Button>
             </div>
-           </Container>
+           </div>
         </>
     )
 }
