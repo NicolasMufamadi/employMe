@@ -1,5 +1,4 @@
 import './App.css';
-import { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,7 +10,8 @@ import { styled } from '@mui/material/styles';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from './store/slices/auth.slice';
+import { logout,getUser } from './store/slices/auth.slice';
+import { useEffect } from 'react';
 
 const darkTheme = createTheme({
   palette: {
@@ -39,26 +39,30 @@ const LinkButton = styled(Button)({
   }
   
 });
-
-
-
-
-
+               
 function Header() {
   
   const user = useSelector((state)=> state.auth.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  console.log(user)
 
+  useEffect(() => {
+    if(localStorage.getItem('jwtToken')){
+      dispatch(getUser())
+    }else{
+      dispatch(logout())
+    }
+  }, [dispatch,navigate])
 
 
   const LoggedIn = () => {
      return(
       <>
-          <LinkButton>MyApplications</LinkButton>
-          <LinkButton onClick={() => navigate('/myaccount')}>MyAccount</LinkButton>
-          <LinkButton>Quotes</LinkButton>
-          <LinkButton onClick={()=> handleLogout()}>Logout</LinkButton>
+          <LinkButton onClick={() => navigate('/myaccount')} style={{fontWeight: 'bold'}}>MyAccount</LinkButton>
+          <LinkButton style={{fontWeight: 'bold'}}>MyApplications</LinkButton>
+          <LinkButton style={{fontWeight: 'bold'}} >Quotes</LinkButton>
+          <LinkButton onClick={()=> handleLogout()} style={{fontWeight: 'bold'}} >Logout</LinkButton>
       </>
      )
   }
@@ -66,9 +70,9 @@ function Header() {
   const Guest = () => {
     return(
       <>
-          <LinkButton>Quotes</LinkButton>
-          <LinkButton className='mr-3'>About</LinkButton>
-          <LinkButton onClick={() => navigate("/login")}>Login</LinkButton>
+          <LinkButton  style={{fontWeight: 'bold'}}>Quotes</LinkButton>
+          <LinkButton className='mr-3'  style={{fontWeight: 'bold'}}>About</LinkButton>
+          <LinkButton onClick={() => navigate("/login")}  style={{fontWeight: 'bold'}}>Login</LinkButton>
       </>
     )
   }
@@ -91,10 +95,19 @@ function Header() {
             color="secondary"
             aria-label="menu"
             sx={{ mr: 2 }}
+            
           >
             <MenuIcon />
           </IconButton>
-          <Typography color="secondary" variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography 
+              className='logo' 
+              color="secondary" 
+              variant="h6" 
+              component="div" 
+              sx={{ flexGrow: 1 }} 
+              style={{fontWeight: 'bold'}} 
+              onClick={() => navigate('/')}
+          >
             EmployMe
           </Typography>
           {
