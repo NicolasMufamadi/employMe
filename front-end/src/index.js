@@ -13,6 +13,10 @@ import MyAccount from './components/profile/myaccount';
 import ManageProfile from './components/profile/manageprofile/manageprofile';
 import ProtectedRoutes from './utils/protectedRoutes';
 import ChangePassword from './components/profile/manageprofile/change-password';
+import AddAddress from './components/profile/address/addAddress';
+import ViewEducation from './components/profile/education/view-education';
+import AddEducation from './components/profile/education/add';
+import ViewAddress from './components/profile/address/viewAddress';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +29,11 @@ root.render(
               <Route path='/myaccount' element={<MyAccount />}></Route>
               <Route path='/myaccount/manage-profile' element={<ManageProfile />}></Route>
               <Route path='/myaccount/manage-profile/change-password' element={<ChangePassword />}></Route>
+              <Route path='/myaccount/manage-address' element={<ViewAddress />}></Route>
+              <Route path='/myaccount/manage-address/add-address' element={<AddAddress />}></Route>
+              <Route path='/myaccount/manage-address/edit-address' element={<AddAddress />}></Route>
+              <Route path='/myaccount/manage-education' element={<ViewEducation />}></Route>
+              <Route path='/myaccount/manage-education/add' element={<AddEducation />}></Route>
           </Route>
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
