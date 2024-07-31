@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS adress;
 CREATE TABLE adress(
     address_id SERIAL PRIMARY KEY,
     user_id integer  REFERENCES users(user_id),
-    street_no integer,
+    street_no VARCHAR(10),
     street_name VARCHAR(50),
     feature VARCHAR(50),
     suburb VARCHAR(50),
@@ -37,11 +37,10 @@ CREATE TABLE qualifications(
     qualification_type VARCHAR(50),
     qualification_status VARCHAR(50),
     institution_name VARCHAR(100),
-    study_field VARCHAR(100),
-    study_type VARCHAR(100),
+    field VARCHAR(100),
+    course VARCHAR(100),
     starting_date DATE,
-    ending_date DATE,
-    skills text[]
+    ending_date DATE
 );
 
 DROP TABLE IF EXISTS jobs;
