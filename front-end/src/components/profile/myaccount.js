@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box'
 import PersonIcon from '@mui/icons-material/Person';
-import MyLocationIcon from '@mui/icons-material/LocationCity';
+import HomeIcon from '@mui/icons-material/Home';
 import SchoolIcon from '@mui/icons-material/School';
 import IconButton  from '@mui/material/IconButton';
 
@@ -14,7 +14,7 @@ export default function MyAccount(){
 
     return(
        <Container>
-           <div style={{marginTop: '50px',display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
+           <div style={{marginTop: '100px',display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
                <Box 
                    height={200}
                    width={200}
@@ -51,8 +51,8 @@ export default function MyAccount(){
                    
                >
                 <div>
-                    <IconButton>
-                        <MyLocationIcon  sx={{fontSize: 200,color: '#fff'}} />
+                    <IconButton onClick={() => navigate("/myaccount/manage-address")}>
+                        <HomeIcon  sx={{fontSize: 200,color: '#fff'}} />
                     </IconButton>
                     <p style={{fontWeight: 'bold'}}>Address</p>
                 </div>
@@ -72,7 +72,7 @@ export default function MyAccount(){
                    
                >
                 <div>
-                    <IconButton>
+                    <IconButton onClick={() => navigate("/myaccount/view-education")}>
                         <SchoolIcon  sx={{fontSize: 200,color: '#fff'}} />
                     </IconButton>
                     <p style={{fontWeight: 'bold'}}>Education</p>
