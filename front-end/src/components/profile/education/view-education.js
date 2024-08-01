@@ -9,6 +9,7 @@ import Breadcrumbs  from "@mui/material/Breadcrumbs";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Typography  from "@mui/material/Typography";
 import Button  from "@mui/material/Button";
+import HandleEmptyArray from "../../handleEmptyArray";
 
 export default function ViewEducation() {
 
@@ -31,7 +32,9 @@ export default function ViewEducation() {
 
         FetchData()
 
-    })
+    },[user])
+
+    console.log(education)
 
    return(
     <div style={{ margin: "25px" }}>
@@ -44,17 +47,15 @@ export default function ViewEducation() {
             </Link>
             <Typography key={2}>Manage Education</Typography>
         </Breadcrumbs>
-        <div style={{textAlign: 'center',marginTop: '5rem',display: 'flex',justifyContent: 'center'}}>
-            <Card sx={{width: 500,height: 300}}>
-                <CardContent>
-                    <div>
-                        <SchoolIcon sx={{fontSize: 200}} />
-                    </div>
-                    <Typography variant="h6">No data captured</Typography>
-                    <Button variant="outlined" onClick={() => navigate("/myaccount/manage-education/add")}>Add Education</Button>
-                </CardContent>
-            </Card>   
-        </div>
+        {
+            education.length > 0 ? (
+                <>
+                
+                </>
+            ): (
+                <HandleEmptyArray LinkIcon={<SchoolIcon sx={{fontSize: 200}} />} link={'/myaccount/manage-education/add'} message={'Add Education'} />
+            )
+        }
     </div>
    )
 
