@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import NavigateNext from "@mui/icons-material/NavigateNext";
 import FormControl from "@mui/material/FormControl";
 import InputLabel  from "@mui/material/InputLabel";
-import FilledInput from "@mui/material/FilledInput";
 import TextField  from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,10 +19,8 @@ import { useSelector } from "react-redux";
 import axiosBaseUrl from "../../../config/base.url";
 
 export default function AddEducation() {
-
-
+    const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
-    const date = new Date();
     const [data,setData] = useState({
         user_id: user.data.user_id,
         study_field: '',
@@ -76,8 +73,8 @@ export default function AddEducation() {
 
 
     const addQualification = async() => {
-        if(starting_date !== ''){
-            const obj = {...data}
+   
+        if(!isNaN(starting_date.year() || ending_date.year())){
             try {
                 const request = await axiosBaseUrl.post('/qualification/',{
                     user_id: data.user_id,
@@ -89,10 +86,15 @@ export default function AddEducation() {
                     starting_date: starting_date.year()+'-'+ months[starting_date.month()] +'-'+ starting_date.date(),
                     ending_date: ending_date.year()+'-'+ months[ending_date.month()] +'-'+ ending_date.date()
                 })
-                console.log(request)
+                if(request.data){
+                    toast.success('Qualification added!');
+                    setTimeout(()=> navigate('/myaccount/manage-education'),5000);
+                }
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
+       }else {
+            toast.warning("Add starting date")
        }
     }
 
@@ -111,9 +113,9 @@ export default function AddEducation() {
 
 
     return(
-        <div style={{margin: '25px'}}>
+        <div style={{margin: '25px'}} >
             <div>
-                <ToastContainer style={{marginTop: "50px"}}  />
+                <ToastContainer   />
             </div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Breadcrumbs 
@@ -124,7 +126,7 @@ export default function AddEducation() {
             </Breadcrumbs>
             <div style={{marginTop: '25px'}}>
                <Typography variant="h3">Add Qualification</Typography> 
-               <Box
+               <Box 
                    component={'form'}
                    onSubmit={handleFormSubmit}
                    sx={{width: '40%',marginTop: '15px'}}
