@@ -19,11 +19,16 @@ import DoneIcon from '@mui/icons-material/Done';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add'; 
+import RemoveQualification from "./remove-qualification";
 
 export default function ViewEducation() {
 
 
+    
     const [qualifications,setQualifications] = useState([]);
+    const [qualification_id,setQualification_id] = useState('');
+    const [isOpen,setIsOpen] = useState(false);
     const user = useSelector((state) => state.auth.user);
     const navigate = useNavigate();
 
@@ -61,10 +66,19 @@ export default function ViewEducation() {
 
         return (
             <div>
-                <p style={{marginTop: '10px',marginLeft: '10px'}}>[ {formattedDate} - {ending_date}]</p>
+                <p style={{marginTop: '10px',marginLeft: '10px',fontWeight: 'bold'}}>[ {formattedDate} - {ending_date}]</p>
             </div>
         );
     };
+
+    const handleOpenDialog = (id) => {
+        setQualification_id(id)
+        setIsOpen(true)
+    }
+
+    const handleCloseDialog = () => {
+        setIsOpen(false)
+    }
 
 
    return(
@@ -82,6 +96,14 @@ export default function ViewEducation() {
             qualifications.length > 0 ? (
                 <>
                   <Typography variant="h3" style={{marginTop: '20px',marginBottom: '20px'}}>Qualifications</Typography>
+                  <Button
+                    variant="contained"
+                    style={{margin: '10px 0',color: '#fff',backgroundColor: '#3AAFA9'}}
+                    endIcon={<AddIcon />}
+                    onClick={()=>navigate('/myaccount/manage-education/add')}
+                  >
+                    Add Qualification
+                  </Button>
                   {
                     qualifications.map((qualification) => (
                         <Card raised key={qualification.qualification_id} sx={{marginBottom: '25px'}}>
@@ -147,10 +169,12 @@ export default function ViewEducation() {
                                     variant="contained"
                                     color="error"
                                     endIcon={<DeleteIcon />}
+                                    onClick={() => handleOpenDialog(qualification.qualification_id)}
                                 >
                                     Remove
                                 </Button>
                             </CardActions>  
+                            <RemoveQualification  handleOpen={isOpen} handleClose={handleCloseDialog} id={qualification_id} />
                         </Card>
                     ))
                   } 
