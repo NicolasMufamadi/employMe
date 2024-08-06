@@ -34,7 +34,7 @@ export default function ViewEducation() {
 
     useEffect(() => {
 
-        const FetchData = () => {
+        const fetchData = () => {
             axiosBaseUrl.get(`/qualification/${user.data.user_id}`)
             .then((response) => {
                 setQualifications(response.data)
@@ -44,7 +44,7 @@ export default function ViewEducation() {
 
         }
 
-        FetchData()
+        fetchData()
 
     },[user])
 
@@ -72,12 +72,16 @@ export default function ViewEducation() {
     };
 
     const handleOpenDialog = (id) => {
-        setQualification_id(id)
-        setIsOpen(true)
+        setQualification_id(id);
+        setIsOpen(true);
     }
 
     const handleCloseDialog = () => {
-        setIsOpen(false)
+        setIsOpen(false);
+    }
+
+    const handleUpdateQualification = (qualification) => {
+        navigate('/myaccount/manage-education/update-qualification',{state: qualification})
     }
 
 
@@ -162,6 +166,7 @@ export default function ViewEducation() {
                                     variant="contained"
                                     style={{backgroundColor: '#3AAFA9'}} 
                                     endIcon={<EditIcon />}
+                                    onClick={() => handleUpdateQualification(qualification)}
                                 >
                                     Update
                                 </Button>
