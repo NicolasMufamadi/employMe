@@ -23,7 +23,7 @@ export default function ViewAddress(){
         
         const fetchAddress = async() => {
             const response = await axiosBaseUrl.get(`/address/${user.data.user_id}`)
-            console.log(response)
+
             if(response.data){ 
                 setAddress(response.data.data)
             } 
@@ -33,14 +33,14 @@ export default function ViewAddress(){
     
     },[user])
 
-    const handleDialogClose = () => {
-        setIsOpen(false);
-        window.location.reload();
-    }
-
     const handleDialogOpen = () => {
         setIsOpen(true)
     }
+
+    const handleDialogClose = () => {
+        setIsOpen(false);
+    }
+
 
     return(
         <div style={{margin: '25px'}}>
@@ -107,8 +107,8 @@ export default function ViewAddress(){
                                 >
                                     Delete
                                 </Button>
-                                <DeleteAddress open={isOpen} close={handleDialogClose} address={item.address_id} />
                             </CardActions>
+                                <DeleteAddress open={isOpen} handleClose={handleDialogClose} address={item.address_id} />
                             </Card>
                         ))
                         

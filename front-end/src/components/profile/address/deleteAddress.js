@@ -1,18 +1,13 @@
-import * as React from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,Slide } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import axiosBaseUrl from '../../../config/base.url';
 
-export default function DeleteAddress({ open, close, address }) {
-
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
+export default function DeleteAddress({ open, handleClose, address }) {
 
     const removeAddress = async () => {
         try {
             const response =await axiosBaseUrl.delete(`/address/${address}`)
             if(response.data){
-                close()
+                handleClose()
             }
         } catch (error) {
             console.log(error)
@@ -22,10 +17,8 @@ export default function DeleteAddress({ open, close, address }) {
     
     return(
         <Dialog
-            keepMounted
-            TransitionComponent={Transition}
             open={open}
-            onClose={close}
+            onClose={handleClose}
         >
             <DialogTitle style={{textAlign: 'center',fontWeight: 'bolder'}}>Confirm your action</DialogTitle>      
             <DialogContent>
@@ -37,7 +30,7 @@ export default function DeleteAddress({ open, close, address }) {
                 <Button 
                     variant="contained" 
                     style={{backgroundColor: '#3AAFA9'}}
-                    onClick={close}
+                    onClick={handleClose}
                 >
                     Cancel
                 </Button>
