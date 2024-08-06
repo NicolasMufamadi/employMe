@@ -34,6 +34,7 @@ root.render(
               <Route path='/myaccount/manage-address/edit-address' element={<AddAddress />}></Route>
               <Route path='/myaccount/manage-education' element={<ViewEducation />}></Route>
               <Route path='/myaccount/manage-education/add' element={<AddEducation />}></Route>
+              <Route path='/myaccount/manage-education/update-qualification/' element={<AddEducation />}></Route>
           </Route>
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
