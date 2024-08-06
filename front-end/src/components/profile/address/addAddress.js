@@ -97,7 +97,7 @@ export default function AddAddress(){
         <Box 
           component="form"
           sx={{marginTop: '25px'}}
-          onSubmit={handleOnSubmit}
+          onSubmit={state ? handleFormUpdate : handleOnSubmit}
         >
           <Card>
             <TextField
@@ -181,7 +181,7 @@ export default function AddAddress(){
               {
                 state ? (
                   <Button 
-                    onClick={handleFormUpdate}
+                    type="submit"
                     style={{margin: '25px',color: '#fff',backgroundColor: '#3AAFA9'}}
                 >
                   Update Address
