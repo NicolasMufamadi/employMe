@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -19,19 +19,22 @@ import { useSelector } from "react-redux";
 import axiosBaseUrl from "../../../config/base.url";
 
 export default function AddEducation() {
-    const navigate = useNavigate();
+
     const user = useSelector((state) => state.auth.user);
+    const { state } = useLocation();
+    const navigate = useNavigate();
+
     const [data,setData] = useState({
         user_id: user.data.user_id,
-        study_field: '',
-        qualification_type: '',
-        study_type: '',
-        institution_name: '',
-        qualification_status: ''
+        study_field: state ? state.study_field : '',
+        qualification_type: state ? state.qualification_type : '',
+        study_type: state ? state.study_type : '',
+        institution_name: state ? state.institution_name : '',
+        qualification_status: state ? state.qualification_status : ''
     })
 
-    const [starting_date,setStartingDate] = useState(dayjs(""));
-    const [ending_date,setEndingDate] = useState(dayjs(""));
+    const [starting_date,setStartingDate] = useState(state ? dayjs(state.starting_date) : dayjs(""));
+    const [ending_date,setEndingDate] = useState(state ? dayjs(state.ending_date) : dayjs(""));
 
     const qualificationTypes = [
         "National Certificate/ National Senior Certificate",
@@ -43,12 +46,10 @@ export default function AddEducation() {
         "Doctor's Degree"
     ]
 
-    const statuses = [
-        "In-progress",
-        "Completed"
-    ]
-
+    const statuses = ["In-progress","Completed"]
     const months = ['Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec']
+
+
     
     const breadcrumbs = [
         <Link 
@@ -71,9 +72,21 @@ export default function AddEducation() {
 
     ]
 
+    console.log(data)
 
-    const addQualification = async() => {
-   
+    const handleOnChange = (e) => {
+        e.preventDefault()
+        const { name, value } = e.target;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
+    }
+
+
+    const handleAddQualification = async(e) => {
+
+        e.preventDefault()
         if(!isNaN(starting_date.year() || ending_date.year())){
             try {
                 const request = await axiosBaseUrl.post('/qualification/',{
@@ -87,7 +100,7 @@ export default function AddEducation() {
                     ending_date: ending_date.year()+'-'+ months[ending_date.month()] +'-'+ ending_date.date()
                 })
                 if(request.data){
-                    toast.success('Qualification added!');
+                    toast.success('Qualification added');
                     setTimeout(()=> navigate('/myaccount/manage-education'),5000);
                 }
             } catch (error) {
@@ -98,18 +111,31 @@ export default function AddEducation() {
        }
     }
 
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        setData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }))
-    }
+    const handleUpdateQualification = async(e) => {
+ 
+        e.preventDefault()
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
+        if(!isNaN(starting_date.year() || ending_date.year())){
+            try {
+                const request = await axiosBaseUrl.put(`/qualification/${state.qualification_id}`, {
+                    study_field: data.study_field,
+                    study_type: data.study_type,
+                    qualification_type: data.qualification_type,
+                    qualification_status: data.qualification_status,
+                    institution_name: data.institution_name,
+                    starting_date: starting_date.year()+'-'+ months[starting_date.month()] +'-'+ starting_date.date(),
+                    ending_date: ending_date.year()+'-'+ months[ending_date.month()] +'-'+ ending_date.date()
+                })
+                console.log(request)
+                if(request.status === 200){
+                    toast.success('Qualification updated')
+                    setTimeout(() => navigate('/myaccount/manage-education'),5000)
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
     }
-
 
 
     return(
@@ -127,8 +153,8 @@ export default function AddEducation() {
             <div style={{marginTop: '25px'}}>
                <Typography variant="h3">Add Qualification</Typography> 
                <Box 
-                   component={'form'}
-                   onSubmit={handleFormSubmit}
+                   component={"form"}
+                   onSubmit={state ? handleUpdateQualification : handleAddQualification}
                    sx={{width: '40%',marginTop: '15px'}}
                >
                 <TextField  
@@ -162,7 +188,7 @@ export default function AddEducation() {
                     name="study_type"
                     variant="filled"
                     onChange={handleOnChange}
-                    value={data.course}
+                    value={data.study_type}
                     style={{marginTop: '25px'}}
                     fullWidth
                     required
@@ -211,15 +237,27 @@ export default function AddEducation() {
                     onChange={(newDate) => setEndingDate(newDate)}
                 />
             </div>
-               </Box>
+            {
+                state ? (
+                    <Button 
+                        type="submit"
+                        variant='contained' 
+                        style={{margin: '15px 0',color: '#fff',backgroundColor: '#3AAFA9'}}
+                    >
+                    Update Qualification
+                </Button>                    
+                ): (
+                    <Button 
+                        variant='contained' 
+                        style={{margin: '15px 0',color: '#fff',backgroundColor: '#3AAFA9'}}
+                        type="submit"
+                >
+                    Add Qualification
+                </Button>
+                )
+            }
+            </Box>
             </div>
-            <Button 
-                variant='contained' 
-                style={{margin: '15px 0',color: '#fff',backgroundColor: '#3AAFA9'}}
-                onClick={() => addQualification()}
-            >
-                Add Education
-            </Button>
           </LocalizationProvider>
         </div>
     )
