@@ -10,7 +10,7 @@ module.exports = (async(req,res)=> {
         const getQualification = await db.query("SELECT * FROM qualifications WHERE qualification_id = ($1)",[qualification_id]);
         const qualification = await getQualification.rows[0];
         
-        db.query("UPDATE  qualifications SET user_id = ($1), qualification_status = ($2), institution_name = ($3), study_field = ($4), study_type = ($5), starting_date = ($6), ending_date = ($7), skills = ($8) WHERE qualification_id = ($9) RETURNING*",[
+        db.query("UPDATE  qualifications SET user_id = ($1), qualification_status = ($2), qualification_type = ($3), institution_name = ($4), study_field = ($5), study_type = ($6), starting_date = ($7), ending_date = ($8), skills = ($9) WHERE qualification_id = ($10) RETURNING*",[
             qualification.user_id,
             qualification_status ? qualification_status : qualification.qualification_status,
             qualification_type ? qualification_type : qualification.qualification_type,
