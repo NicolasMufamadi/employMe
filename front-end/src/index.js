@@ -17,6 +17,7 @@ import AddAddress from './components/profile/address/addAddress';
 import ViewEducation from './components/profile/education/view-education';
 import AddEducation from './components/profile/education/add';
 import ViewAddress from './components/profile/address/viewAddress';
+import Quotes from './components/quotes/quote';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -35,6 +36,7 @@ root.render(
               <Route path='/myaccount/manage-education' element={<ViewEducation />}></Route>
               <Route path='/myaccount/manage-education/add' element={<AddEducation />}></Route>
               <Route path='/myaccount/manage-education/update-qualification/' element={<AddEducation />}></Route>
+              <Route path='/quotes' element={<Quotes />}></Route>
           </Route>
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
