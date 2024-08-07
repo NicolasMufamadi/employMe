@@ -61,7 +61,7 @@ function Header() {
       <>
           <LinkButton onClick={() => navigate('/myaccount')} style={{fontWeight: 'bold'}}>MyAccount</LinkButton>
           <LinkButton style={{fontWeight: 'bold'}}>MyApplications</LinkButton>
-          <LinkButton style={{fontWeight: 'bold'}} >Quotes</LinkButton>
+          <LinkButton style={{fontWeight: 'bold'}} onClick={() => navigate('/quotes')}>Quotes</LinkButton>
           <LinkButton onClick={()=> handleLogout()} style={{fontWeight: 'bold'}} >Logout</LinkButton>
       </>
      )
@@ -70,9 +70,8 @@ function Header() {
   const Guest = () => {
     return(
       <>
-          <LinkButton  style={{fontWeight: 'bold'}}>Quotes</LinkButton>
-          <LinkButton className='mr-3'  style={{fontWeight: 'bold'}}>About</LinkButton>
           <LinkButton onClick={() => navigate("/login")}  style={{fontWeight: 'bold'}}>Login</LinkButton>
+          <LinkButton className='mr-3'  style={{fontWeight: 'bold'}}>About</LinkButton>
       </>
     )
   }
