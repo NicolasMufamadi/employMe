@@ -39,6 +39,24 @@ export default function Quotes() {
         getQuote()
     },[])
 
+    const requestQuote = async(category) => {
+        try {
+            const request = await fetch(`https://api.api-ninjas.com/v1/quotes?category=${category}`,{
+                    method: 'GET',
+                    headers: {
+                        'X-Api-Key': process.env.REACT_APP_API_KEY,
+                        "Content-Type": 'application/json'
+                    }
+                })
+            if(request.status === 200){
+                const response = await request.json();
+                setQuote(response[0])
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return(
         <Container style={{marginTop: '30px'}}>
             <Grid container spacing={4}>
@@ -49,7 +67,7 @@ export default function Quotes() {
                             categories.map((category) => (
                                 <div  key={category}>
                                 <ListItem>
-                                    <ListItemButton>
+                                    <ListItemButton onClick={() => requestQuote(category)}>
                                         <ListItemText>{category}</ListItemText>
                                     </ListItemButton>
                                 </ListItem>
